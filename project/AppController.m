@@ -16,14 +16,14 @@
 #define _DISPLENGTH 40
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
-enum {
+typedef enum {
     NSWindowCollectionBehaviorDefault = 0,
     NSWindowCollectionBehaviorCanJoinAllSpaces = 1 << 0,
     NSWindowCollectionBehaviorMoveToActiveSpace = 1 << 1
-};
+} NSWindowCollectionBehavior;
 #endif
 
-typedef unsigned NSWindowCollectionBehavior;
+//typedef unsigned NSWindowCollectionBehavior;
 
 @interface NSWindow (NSWindowCollectionBehavior)
 - (void)setCollectionBehavior:(NSWindowCollectionBehavior)behavior;

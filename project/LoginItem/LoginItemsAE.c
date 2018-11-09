@@ -125,8 +125,8 @@ static OSStatus LaunchSystemEvents(ProcessSerialNumber *psnPtr)
                 lpb.launchBlockID      = extendedBlock;
                 lpb.launchEPBLength    = extendedBlockLen;
                 lpb.launchControlFlags = launchContinue | launchNoFileFlags;
-                lpb.launchAppSpec      = &appSpec;
-                
+//                lpb.launchAppSpec      = &appSpec;
+				
                 err = LaunchApplication(&lpb);
             }
             if (err == noErr) {
@@ -232,7 +232,7 @@ static OSStatus SendAppleEvent(const AEDesc *event, AEDesc *reply)
 		err = AEGetParamPtr(
 			reply, 
 			keyErrorNumber, 
-			typeShortInteger, 
+			typeSInt16,
 			&junkType,
 			&replyErr, 
 			sizeof(replyErr), 
@@ -794,7 +794,7 @@ extern OSStatus LIAERemove(CFIndex itemIndex)
 	// and sends it to System Events.
 {
 	OSStatus	err;
-	long		itemIndexPlusOne;
+	int64_t		itemIndexPlusOne;
 	AEDesc		indexDesc;
 	AEDesc		loginItemAtIndex;
 	
@@ -806,7 +806,7 @@ extern OSStatus LIAERemove(CFIndex itemIndex)
 	// Build object specifier for "login item X".
 
 	itemIndexPlusOne = itemIndex + 1;	// AppleScript is one-based, CF is zero-based
-	err = AECreateDesc(typeLongInteger, &itemIndexPlusOne, sizeof(itemIndexPlusOne), &indexDesc);
+	err = AECreateDesc(typeSInt64, &itemIndexPlusOne, sizeof(itemIndexPlusOne), &indexDesc);
 	if (err == noErr) {
 		err = CreateObjSpecifier(cLoginItem, (AEDesc *) &kAENull, formAbsolutePosition, &indexDesc, false, &loginItemAtIndex);
 	}
